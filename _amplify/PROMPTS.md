@@ -4,5 +4,8 @@
 
 ## Help to create a component player that:
 
+- on landing page 
+- not user authenticated
+- show the videos allowing navegate hierachy folder parent => children
 - allow navegate the storage s3 folders and sub-folders 
 - read the files in the storage a show it, and allow play  using a player the videos
