@@ -17,69 +17,14 @@ function TopBar() {
   )
 }
 
-function AuthenticatedView() {
-  const { signOut, user } = useAuthenticator((context) => [
+function AppBody() {
+  const { authStatus, signOut, user } = useAuthenticator((context) => [
+    context.authStatus,
     context.signOut,
     context.user,
   ])
+  const isAuthenticated = authStatus === 'authenticated'
 
-  return (
-    <>
-      <TopBar />
-      <section
-        className="spi-hero"
-        style={{ padding: '2.25rem 2rem 3.5rem' }}
-      >
-        <div className="spi-hero-inner">
-          <span className="spi-eyebrow">Staff portal</span>
-          <h1 style={{ fontSize: 32 }}>Manage island videos</h1>
-          <p>
-            Upload and organize tour videos for guests staying at the
-            apartment.
-          </p>
-        </div>
-      </section>
-
-      <main className="spi-page">
-        <header
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem',
-            flexWrap: 'wrap',
-          }}
-        >
-          <p style={{ margin: 0, color: 'var(--text)' }}>
-            Signed in as{' '}
-            <strong style={{ color: 'var(--text-h)' }}>
-              {user?.signInDetails?.loginId}
-            </strong>
-          </p>
-          <button
-            type="button"
-            onClick={signOut}
-            style={{
-              padding: '0.45rem 1rem',
-              background: 'var(--surface)',
-              color: 'var(--accent-strong)',
-              border: '1px solid var(--accent-border)',
-              borderRadius: 999,
-              cursor: 'pointer',
-              fontWeight: 600,
-            }}
-          >
-            Sign Out
-          </button>
-        </header>
-
-        <VideoFolderManager />
-      </main>
-    </>
-  )
-}
-
-function GuestLanding() {
   const [showStaffLogin, setShowStaffLogin] = useState(false)
 
   return (
@@ -100,49 +45,84 @@ function GuestLanding() {
       <main className="spi-page">
         <VideoPlayer />
 
+        {isAuthenticated && <VideoFolderManager />}
+
         <section
           style={{
             marginTop: '2.5rem',
             paddingTop: '1.5rem',
             borderTop: '1px solid var(--border)',
             textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.6rem',
           }}
         >
-          <button
-            type="button"
-            onClick={() => setShowStaffLogin((open) => !open)}
-            style={{
-              padding: '0.4rem 0',
-              border: 'none',
-              background: 'transparent',
-              color: 'var(--accent-strong)',
-              cursor: 'pointer',
-              fontWeight: 600,
-              fontSize: '0.95rem',
-              letterSpacing: '0.02em',
-            }}
-          >
-            {showStaffLogin ? 'Hide staff sign in' : 'Staff sign in'}
-          </button>
-          {showStaffLogin && (
-            <div style={{ marginTop: '1rem' }}>
-              <Authenticator />
+          {isAuthenticated ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '1rem',
+                flexWrap: 'wrap',
+              }}
+            >
+              <p style={{ margin: 0, color: 'var(--text)' }}>
+                Signed in as{' '}
+                <strong style={{ color: 'var(--text-h)' }}>
+                  {user?.signInDetails?.loginId}
+                </strong>
+              </p>
+              <button
+                type="button"
+                onClick={signOut}
+                style={{
+                  padding: '0.5rem 1.1rem',
+                  background: 'var(--cta)',
+                  color: '#ffffff',
+                  border: '1px solid var(--cta)',
+                  borderRadius: 999,
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  letterSpacing: '0.01em',
+                  boxShadow:
+                    '0 6px 14px -6px rgba(255, 127, 80, 0.6)',
+                }}
+              >
+                Sign out
+              </button>
             </div>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => setShowStaffLogin((open) => !open)}
+                style={{
+                  padding: '0.4rem 0',
+                  border: 'none',
+                  background: 'transparent',
+                  color: 'var(--accent-strong)',
+                  cursor: 'pointer',
+                  fontWeight: 600,
+                  fontSize: '0.95rem',
+                  letterSpacing: '0.02em',
+                  alignSelf: 'flex-start',
+                }}
+              >
+                {showStaffLogin ? 'Hide staff sign in' : 'Staff sign in'}
+              </button>
+              {showStaffLogin && (
+                <div style={{ marginTop: '1rem' }}>
+                  <Authenticator />
+                </div>
+              )}
+            </>
           )}
         </section>
       </main>
     </>
   )
-}
-
-function AppBody() {
-  const authStatus = useAuthenticator((context) => [context.authStatus])[0]
-
-  if (authStatus === 'authenticated') {
-    return <AuthenticatedView />
-  }
-
-  return <GuestLanding />
 }
 
 export default function App() {
