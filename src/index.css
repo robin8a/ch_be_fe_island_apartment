@@ -1,22 +1,57 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* South Padre Island — "Caribbean of Texas" palette
+     Gulf turquoise, sunset coral, deep ocean navy, sandy off-white. */
+  --bg: #fbf7ee;
+  --surface: #ffffff;
+  --text: #4a6072;
+  --text-h: #0c2e4a;
+  --muted: #7d8a98;
+  --border: #e6dfd1;
+  --code-bg: #eaf6f7;
+  --sand: #f1e7d3;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  /* Primary accent: Gulf turquoise */
+  --accent: #0aa7b3;
+  --accent-strong: #0c8a95;
+  --accent-bg: rgba(10, 167, 179, 0.1);
+  --accent-border: rgba(10, 167, 179, 0.45);
+
+  /* Call-to-action: sunset coral */
+  --cta: #ff7f50;
+  --cta-strong: #ef6a3a;
+  --cta-bg: rgba(255, 127, 80, 0.12);
+
+  /* Deep ocean / sky */
+  --navy: #0c2e4a;
+  --navy-soft: #173f60;
+
+  --social-bg: rgba(234, 246, 247, 0.6);
+  --shadow:
+    0 10px 25px -10px rgba(12, 46, 74, 0.2),
+    0 4px 8px -4px rgba(12, 46, 74, 0.08);
+
+  /* Hero gradient: Gulf water flowing into sunset */
+  --hero-gradient: linear-gradient(
+    135deg,
+    #0c2e4a 0%,
+    #0c8a95 35%,
+    #14c0cf 60%,
+    #ffb88a 90%,
+    #ff7f50 100%
+  );
+  /* Top header strip: deep ocean to teal */
+  --bar-gradient: linear-gradient(90deg, #0c2e4a 0%, #0c8a95 60%, #0aa7b3 100%);
+
+  --sans:
+    'Inter', system-ui, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  --heading:
+    'Inter', system-ui, 'Segoe UI', Roboto, -apple-system, BlinkMacSystemFont,
+    sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
+  font: 18px/150% var(--sans);
+  letter-spacing: 0.1px;
   color-scheme: light dark;
   color: var(--text);
   background: var(--bg);
@@ -32,60 +67,94 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+    --bg: #081826;
+    --surface: #0f2436;
+    --text: #a9bcce;
+    --text-h: #e9f2fb;
+    --muted: #7a90a6;
+    --border: #1c3a52;
+    --code-bg: #0d2233;
+    --sand: #14283a;
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --accent: #3cd2dd;
+    --accent-strong: #25b9c4;
+    --accent-bg: rgba(60, 210, 221, 0.15);
+    --accent-border: rgba(60, 210, 221, 0.55);
+
+    --cta: #ff9472;
+    --cta-strong: #ff7f50;
+    --cta-bg: rgba(255, 148, 114, 0.18);
+
+    --navy: #e9f2fb;
+    --navy-soft: #c8d9e8;
+
+    --social-bg: rgba(13, 34, 51, 0.6);
+    --shadow:
+      0 10px 25px -10px rgba(0, 0, 0, 0.55),
+      0 4px 8px -4px rgba(0, 0, 0, 0.35);
+
+    --hero-gradient: linear-gradient(
+      135deg,
+      #061321 0%,
+      #0c4f5a 35%,
+      #1ea6b3 60%,
+      #ff9472 100%
+    );
+    --bar-gradient: linear-gradient(
+      90deg,
+      #061321 0%,
+      #0c4f5a 60%,
+      #1ea6b3 100%
+    );
   }
 }
 
+body {
+  margin: 0;
+  background: var(--bg);
+  background-image:
+    radial-gradient(
+      ellipse at top left,
+      rgba(10, 167, 179, 0.08),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(255, 127, 80, 0.07),
+      transparent 55%
+    );
+  background-attachment: fixed;
+  min-height: 100svh;
+}
+
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
+  width: 100%;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-}
-
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--heading);
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text-h);
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+  font-size: 44px;
+  line-height: 1.1;
+  margin: 0 0 0.5rem;
   @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+    font-size: 32px;
   }
 }
 h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
+  font-size: 22px;
+  line-height: 1.25;
   margin: 0 0 8px;
   @media (max-width: 1024px) {
     font-size: 20px;
@@ -93,6 +162,16 @@ h2 {
 }
 p {
   margin: 0;
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-weight: 500;
+}
+a:hover {
+  color: var(--accent);
+  text-decoration: underline;
 }
 
 code,
@@ -104,8 +183,109 @@ code,
 }
 
 code {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 135%;
-  padding: 4px 8px;
+  padding: 3px 7px;
   background: var(--code-bg);
+}
+
+/* Top brand bar — deep ocean to Gulf teal */
+.spi-topbar {
+  background: var(--bar-gradient);
+  color: #f4fbfc;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: var(--shadow);
+}
+.spi-topbar .spi-brand {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.spi-topbar .spi-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffb88a;
+  box-shadow: 0 0 0 3px rgba(255, 184, 138, 0.25);
+}
+.spi-topbar .spi-tag {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  opacity: 0.85;
+}
+.spi-topbar .spi-spacer {
+  flex: 1;
+}
+
+/* Hero banner with Gulf-to-sunset gradient */
+.spi-hero {
+  position: relative;
+  background: var(--hero-gradient);
+  color: #ffffff;
+  padding: 3rem 2rem 4.5rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+.spi-hero::after {
+  /* sandy wave bottom edge */
+  content: '';
+  position: absolute;
+  inset: auto 0 -1px 0;
+  height: 36px;
+  background:
+    radial-gradient(
+        24px 24px at 24px 36px,
+        var(--bg) 98%,
+        transparent 100%
+      )
+      0 0 / 48px 36px repeat-x,
+    linear-gradient(180deg, transparent, var(--bg));
+}
+.spi-hero-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.spi-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+.spi-hero h1 {
+  color: #ffffff;
+  margin-top: 0.85rem;
+  text-shadow: 0 2px 16px rgba(12, 46, 74, 0.25);
+}
+.spi-hero p {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin-top: 0.4rem;
+  text-shadow: 0 1px 8px rgba(12, 46, 74, 0.2);
+}
+
+/* Content container that sits over sandy background */
+.spi-page {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  box-sizing: border-box;
 }
