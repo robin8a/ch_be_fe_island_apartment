@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
-import DocumentViewer from './components/DocumentViewer'
+import MediaBrowser from './components/MediaBrowser'
 import VideoFolderManager from './components/VideoFolderManager'
-import VideoPlayer from './components/VideoPlayer'
 
 function TopBar() {
   return (
@@ -37,15 +36,14 @@ function AppBody() {
           <h1>Welcome to your island apartment</h1>
           <p>
             Crystal-clear Gulf waters, soft sand and unforgettable sunsets —
-            browse the apartment&nbsp;tour videos below and start dreaming of
-            your stay.
+            browse the apartment&nbsp;tour photos, videos and documents below
+            and start dreaming of your stay.
           </p>
         </div>
       </section>
 
       <main className="spi-page">
-        <VideoPlayer />
-        <DocumentViewer />
+        <MediaBrowser />
 
         {isAuthenticated && <VideoFolderManager />}
 

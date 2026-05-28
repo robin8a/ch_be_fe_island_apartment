@@ -35,6 +35,15 @@ export function isPdfFileName(name: string): boolean {
   return PDF_EXTENSION.test(name)
 }
 
+export type MediaKind = 'video' | 'image' | 'pdf' | 'other'
+
+export function getMediaKind(name: string): MediaKind {
+  if (isVideoFileName(name)) return 'video'
+  if (isImageFileName(name)) return 'image'
+  if (isPdfFileName(name)) return 'pdf'
+  return 'other'
+}
+
 export function parentPath(path: string): string {
   if (path === BASE_PATH) return BASE_PATH
   const relative = path.slice(BASE_PATH.length).replace(/\/+$/, '')
