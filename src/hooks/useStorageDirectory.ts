@@ -8,13 +8,22 @@ import {
   type ListedFile,
 } from '../lib/publicStorage'
 
-export function useStorageDirectory(currentPath: string) {
+type UseStorageDirectoryOptions = {
+  enabled?: boolean
+}
+
+export function useStorageDirectory(
+  currentPath: string,
+  options: UseStorageDirectoryOptions = {},
+) {
+  const { enabled = true } = options
   const [childFolders, setChildFolders] = useState<ChildFolder[]>([])
   const [files, setFiles] = useState<ListedFile[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const loadDirectory = useCallback(async () => {
+    if (!enabled) return
     setLoading(true)
     setError(null)
     try {
@@ -62,11 +71,11 @@ export function useStorageDirectory(currentPath: string) {
     } finally {
       setLoading(false)
     }
-  }, [currentPath])
+  }, [currentPath, enabled])
 
   useEffect(() => {
-    void loadDirectory()
-  }, [loadDirectory])
+    if (enabled) void loadDirectory()
+  }, [loadDirectory, enabled])
 
   return {
     childFolders,

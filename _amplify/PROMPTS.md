@@ -14,4 +14,4 @@
 
 ## Offline [NEW]
 
-- Allow have the vide
+- Allow to dowload the multimedia locally for offline 

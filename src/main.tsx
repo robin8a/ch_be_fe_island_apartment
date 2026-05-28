@@ -4,11 +4,13 @@ import { Amplify } from 'aws-amplify'
 import outputs from '../amplify_outputs.json'
 import './index.css'
 import App from './App.tsx'
+import UpdatePrompt from './components/UpdatePrompt.tsx'
 
 Amplify.configure(outputs)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
+    <UpdatePrompt />
   </StrictMode>,
 )

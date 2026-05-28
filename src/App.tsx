@@ -3,6 +3,8 @@ import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 import MediaBrowser from './components/MediaBrowser'
 import VideoFolderManager from './components/VideoFolderManager'
+import { useOnlineStatus } from './hooks/useOnlineStatus'
+import { browserStyles as styles } from './components/storageBrowserStyles'
 
 function TopBar() {
   return (
@@ -18,6 +20,7 @@ function TopBar() {
 }
 
 function AppBody() {
+  const isOnline = useOnlineStatus()
   const { authStatus, signOut, user } = useAuthenticator((context) => [
     context.authStatus,
     context.signOut,
@@ -30,6 +33,12 @@ function AppBody() {
   return (
     <>
       <TopBar />
+      {!isOnline && (
+        <p style={styles.offlineBanner} role="status">
+          You are offline — open Saved offline in the media library to view files
+          stored on this device.
+        </p>
+      )}
       <section className="spi-hero">
         <div className="spi-hero-inner">
           <span className="spi-eyebrow">The Caribbean of Texas</span>
@@ -45,7 +54,19 @@ function AppBody() {
       <main className="spi-page">
         <MediaBrowser />
 
-        {isAuthenticated && <VideoFolderManager />}
+        {isAuthenticated && isOnline && <VideoFolderManager />}
+
+        {isAuthenticated && !isOnline && (
+          <p
+            style={{
+              ...styles.info,
+              marginTop: '1.75rem',
+            }}
+          >
+            Uploads are disabled while offline. Reconnect to manage media in
+            storage.
+          </p>
+        )}
 
         <section
           style={{
