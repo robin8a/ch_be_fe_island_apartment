@@ -20,9 +20,19 @@ export type ListedFile = {
 }
 
 const VIDEO_EXTENSION = /\.(mp4|webm|ogg|mov|m4v|mkv|avi)$/i
+const IMAGE_EXTENSION = /\.(jpg|jpeg|png|gif|webp|svg|avif)$/i
+const PDF_EXTENSION = /\.pdf$/i
 
 export function isVideoFileName(name: string): boolean {
   return VIDEO_EXTENSION.test(name)
+}
+
+export function isImageFileName(name: string): boolean {
+  return IMAGE_EXTENSION.test(name)
+}
+
+export function isPdfFileName(name: string): boolean {
+  return PDF_EXTENSION.test(name)
 }
 
 export function parentPath(path: string): string {

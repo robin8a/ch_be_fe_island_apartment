@@ -9,3 +9,11 @@
 - show the videos allowing navegate hierachy folder parent => children
 - allow navegate the storage s3 folders and sub-folders 
 - read the files in the storage a show it, and allow play  using a player the videos
+
+## Allow upload images and pdf and visualize 
+
+
+
+## Offline
+
+- Allow have the vide

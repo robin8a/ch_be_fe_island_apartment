@@ -239,4 +239,19 @@ export const browserStyles: Record<string, CSSProperties> = {
     background: '#000',
     boxShadow: '0 12px 30px -12px rgba(12, 46, 74, 0.45)',
   },
+  previewImage: {
+    width: '100%',
+    maxHeight: 'min(70vh, 820px)',
+    borderRadius: 10,
+    objectFit: 'contain',
+    background: 'var(--surface)',
+    boxShadow: '0 12px 30px -12px rgba(12, 46, 74, 0.35)',
+  },
+  previewFrame: {
+    width: '100%',
+    minHeight: 520,
+    borderRadius: 10,
+    border: '1px solid var(--border)',
+    background: 'var(--surface)',
+  },
 }

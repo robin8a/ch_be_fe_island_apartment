@@ -6,6 +6,8 @@ import {
   MARKER_FILE,
   buildBreadcrumbs,
   formatBytes,
+  isImageFileName,
+  isPdfFileName,
   parentPath,
 } from '../lib/publicStorage'
 import { useStorageDirectory } from '../hooks/useStorageDirectory'
@@ -82,6 +84,24 @@ export default function VideoFolderManager() {
     return { file, key }
   }
 
+  const processDocument = async ({ file, key }: { file: File; key: string }) => {
+    const hasKnownName = isImageFileName(file.name) || isPdfFileName(file.name)
+    const hasKnownType =
+      file.type.startsWith('image/') || file.type === 'application/pdf'
+
+    if (!hasKnownType && !hasKnownName) {
+      throw new Error('Only image files or PDFs are allowed.')
+    }
+
+    return { file, key }
+  }
+
+  const iconForFile = (name: string): string => {
+    if (isImageFileName(name)) return '🖼'
+    if (isPdfFileName(name)) return '📄'
+    return '🎬'
+  }
+
   const locationLabel =
     currentPath === BASE_PATH
       ? 'public/ (root)'
@@ -90,7 +110,7 @@ export default function VideoFolderManager() {
   return (
     <section style={styles.section}>
       <header style={styles.header}>
-        <h2 style={{ margin: 0, color: 'var(--text-h)' }}>Manage videos</h2>
+        <h2 style={{ margin: 0, color: 'var(--text-h)' }}>Manage media</h2>
         <button
           type="button"
           onClick={() => void loadDirectory()}
@@ -195,7 +215,7 @@ export default function VideoFolderManager() {
             <ul style={styles.entryList}>
               {files.map((file) => (
                 <li key={file.path} style={styles.fileRow}>
-                  <span style={styles.entryIcon}>🎬</span>
+                  <span style={styles.entryIcon}>{iconForFile(file.name)}</span>
                   <span style={styles.entryName}>{file.name}</span>
                   <span style={styles.entryMeta}>
                     {formatBytes(file.size)}
@@ -226,6 +246,27 @@ export default function VideoFolderManager() {
           onUploadError={(err) => {
             console.error(err)
             setError('Upload failed. Only video files are allowed.')
+          }}
+        />
+      </div>
+
+      <div>
+        <p style={styles.sectionTitle}>Upload images & PDFs here</p>
+        <FileUploader
+          key={`${currentPath}::docs`}
+          acceptedFileTypes={['image/*', 'application/pdf']}
+          path={currentPath}
+          maxFileCount={10}
+          maxFileSize={25 * 1024 * 1024}
+          isResumable
+          processFile={processDocument}
+          onUploadSuccess={() => {
+            setInfo('Upload completed.')
+            void loadDirectory()
+          }}
+          onUploadError={(err) => {
+            console.error(err)
+            setError('Upload failed. Only images and PDFs are allowed.')
           }}
         />
       </div>

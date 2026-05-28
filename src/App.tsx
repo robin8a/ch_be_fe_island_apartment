@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Authenticator, useAuthenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
+import DocumentViewer from './components/DocumentViewer'
 import VideoFolderManager from './components/VideoFolderManager'
 import VideoPlayer from './components/VideoPlayer'
 
@@ -44,6 +45,7 @@ function AppBody() {
 
       <main className="spi-page">
         <VideoPlayer />
+        <DocumentViewer />
 
         {isAuthenticated && <VideoFolderManager />}
 
